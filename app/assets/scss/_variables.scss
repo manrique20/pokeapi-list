@@ -1,0 +1,134 @@
+// ============================================================
+// DESIGN TOKENS
+// All global variables live here. Import this file (or the
+// mixins file, which re-exports it) anywhere styles are needed.
+// Naming convention: $group-property[-variant]
+// ============================================================
+
+// ------------------------------------------------------------
+// Breakpoints (mobile-first: use with `respond-to` mixin)
+// ------------------------------------------------------------
+$breakpoints: (
+  'xs': 0px,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+);
+
+// ------------------------------------------------------------
+// Colors
+// ------------------------------------------------------------
+$color-white: #FFFFFF;
+$color-black: #000000;
+
+$color-primary: #EF5350;
+$color-primary-dark: #C62828;
+$color-primary-light: #FFCDD2;
+$color-accent: #FFCA28;
+
+$color-background: #F4F4F8;
+$color-surface: #FFFFFF;
+
+$color-text: #1F2937;
+$color-text-muted: #6B7280;
+$color-border: #E5E7EB;
+
+$color-favorite: #EF4444;
+$color-success: #22C55E;
+$color-warning: #F59E0B;
+$color-error: #EF4444;
+
+// Pokeball (Figma design)
+$color-pokeball-red: #F22539;
+$color-pokeball-dark: #333333;
+$color-pokeball-ring: #808080;
+
+// Pokémon type colors
+$type-normal: #A8A77A;
+$type-fire: #EE8130;
+$type-water: #6390F0;
+$type-electric: #F7D02C;
+$type-grass: #7AC74C;
+$type-ice: #96D9D6;
+$type-fighting: #C22E28;
+$type-poison: #A33EA1;
+$type-ground: #E2BF65;
+$type-flying: #A98FF3;
+$type-psychic: #F95587;
+$type-bug: #A6B91A;
+$type-rock: #B6A136;
+$type-ghost: #735797;
+$type-dragon: #6F35FC;
+$type-dark: #705746;
+$type-steel: #B7B7CE;
+$type-fairy: #D685AD;
+
+// ------------------------------------------------------------
+// Typography
+// ------------------------------------------------------------
+$font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,
+  'Helvetica Neue', Arial, sans-serif;
+$font-family-headings: $font-family-base;
+
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-xxl: 32px;
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+$line-height-tight: 1.25;
+$line-height-base: 1.5;
+
+// ------------------------------------------------------------
+// Spacing (4px scale)
+// ------------------------------------------------------------
+$spacing-1: 4px;
+$spacing-2: 8px;
+$spacing-3: 12px;
+$spacing-4: 16px;
+$spacing-5: 20px;
+$spacing-6: 24px;
+$spacing-8: 32px;
+$spacing-10: 40px;
+$spacing-12: 48px;
+$spacing-16: 64px;
+
+// ------------------------------------------------------------
+// Radius
+// ------------------------------------------------------------
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 16px;
+$radius-full: 9999px;
+
+// ------------------------------------------------------------
+// Layout
+// ------------------------------------------------------------
+$content-max-width: 1200px;
+$header-height: 64px;
+$footer-height: 64px;
+$safe-area-bottom: env(safe-area-inset-bottom, 0px);
+
+// ------------------------------------------------------------
+// Z-index scale
+// ------------------------------------------------------------
+$z-base: 0;
+$z-header: 100;
+$z-footer: 100;
+$z-modal: 200;
+$z-toast: 300;
+
+// ------------------------------------------------------------
+// Transitions
+// ------------------------------------------------------------
+$transition-fast: 150ms ease;
+$transition-base: 300ms ease;
+$transition-slow: 500ms ease;

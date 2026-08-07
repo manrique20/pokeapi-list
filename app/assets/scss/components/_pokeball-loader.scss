@@ -1,0 +1,34 @@
+// ============================================================
+// COMPONENT: POKEBALL LOADER
+// Animated pokeball used on the splash screen using the SVG asset.
+// Geometry follows the Figma design (155px).
+// ============================================================
+
+@use '../_variables.scss' as *;
+
+.pokeball-loader {
+  position: relative;
+  width: 155px;
+  height: 155px;
+  border-radius: $radius-full;
+  background-image: url('/pokeball.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 8px 24px rgba($color-black, 0.15);
+  animation: pokeball-spin 1.1s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+
+
+}
+
+@keyframes pokeball-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+

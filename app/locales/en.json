@@ -1,0 +1,39 @@
+{
+  "app": {
+    "name": "Pokédex"
+  },
+  "splash": {
+    "loading": "Loading..."
+  },
+  "onboarding": {
+    "title": "Welcome to the Pokédex",
+    "subtitle": "Explore, discover and save your favorite Pokémon in one place.",
+    "start": "Get Started",
+    "skip": "Skip"
+  },
+  "footer": {
+    "pokedex": "Pokédex",
+    "regions": "Regions",
+    "favorites": "Favorites",
+    "profile": "Profile"
+  },
+  "pages": {
+    "pokedex": {
+      "title": "Pokédex",
+      "empty": "Coming soon: Pokémon list with search, types and sharing."
+    },
+    "regions": {
+      "title": "Regions",
+      "empty": "Coming soon: explore the regions of the Pokémon world."
+    },
+    "favorites": {
+      "title": "Favorites",
+      "count": "{count} favorite Pokémon",
+      "empty": "You don't have favorites yet. Tap the heart on a Pokémon to save it."
+    },
+    "profile": {
+      "title": "Profile",
+      "empty": "Coming soon: your profile and preferences."
+    }
+  }
+}

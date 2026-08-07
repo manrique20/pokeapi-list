@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 155" width="155" height="155">
+  <!-- Outer circle background and border -->
+  <circle cx="77.5" cy="77.5" r="74.5" fill="#FFFFFF" stroke="#333333" stroke-width="6"/>
+
+  <!-- Red top half -->
+  <path d="M 3 77.5 A 74.5 74.5 0 0 1 152 77.5 Z" fill="#F22539"/>
+
+  <!-- Middle horizontal divider line -->
+  <line x1="3" y1="77.5" x2="152" y2="77.5" stroke="#333333" stroke-width="6"/>
+
+  <!-- Shine highlight arc (upper right quadrant) -->
+  <path d="M 97.1 23.6 A 57.35 57.35 0 0 1 130.7 56.0" fill="none" stroke="#FFFFFF" stroke-width="6.5" stroke-linecap="round"/>
+
+  <!-- Center button outer circle -->
+  <circle cx="77.5" cy="77.5" r="26" fill="#FFFFFF" stroke="#333333" stroke-width="6"/>
+
+  <!-- Center button inner ring -->
+  <circle cx="77.5" cy="77.5" r="14" fill="#FFFFFF" stroke="#808080" stroke-width="2.5"/>
+</svg>

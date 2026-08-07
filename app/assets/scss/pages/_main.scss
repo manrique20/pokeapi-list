@@ -1,0 +1,44 @@
+// ============================================================
+// PAGES: MAIN (shared)
+// Common layout for the four sections rendered inside the
+// footer layout: page container, title, empty states.
+// ============================================================
+
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+
+.page {
+  width: 100%;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding: $spacing-6;
+  padding-bottom: calc(#{$footer-height} + #{$safe-area-bottom} + #{$spacing-8});
+
+  @include respond-to('md') {
+    padding: $spacing-8 $spacing-6;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-extrabold;
+
+    @include respond-to('md') {
+      font-size: $font-size-xxl;
+    }
+  }
+
+  &__count {
+    margin-top: $spacing-2;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+  }
+
+  &__empty {
+    @include card-surface;
+    margin-top: $spacing-8;
+    padding: $spacing-10 $spacing-6;
+    text-align: center;
+    color: $color-text-muted;
+  }
+}

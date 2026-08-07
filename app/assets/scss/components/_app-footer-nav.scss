@@ -1,0 +1,47 @@
+// ============================================================
+// COMPONENT: APP FOOTER NAV
+// Fixed bottom navigation with the four main sections.
+// ============================================================
+
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+
+.app-footer-nav {
+  @include grid(4, 0);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-footer;
+  height: calc(#{$footer-height} + #{$safe-area-bottom});
+  padding-bottom: $safe-area-bottom;
+  background-color: $color-surface;
+  border-top: 1px solid $color-border;
+
+  &__item {
+    @include flex(center, center, column, $spacing-1);
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    transition: color $transition-fast;
+
+    &:hover,
+    &:focus-visible {
+      color: $color-primary;
+    }
+
+    &.is-active {
+      color: $color-primary;
+      font-weight: $font-weight-semibold;
+    }
+  }
+
+  &__icon {
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  &__label {
+    line-height: 1;
+  }
+}

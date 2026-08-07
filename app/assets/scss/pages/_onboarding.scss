@@ -1,0 +1,86 @@
+// ============================================================
+// PAGE: ONBOARDING
+// First-visit welcome screen with language switch and actions.
+// ============================================================
+
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+
+.onboarding {
+  @include flex(center, center, column);
+  position: relative;
+  min-height: 100dvh;
+  padding: $spacing-6;
+  background-color: $color-white;
+  text-align: center;
+  overflow: hidden;
+
+  @include respond-to('md') {
+    padding: $spacing-16;
+  }
+
+  &__lang {
+    @include flex(flex-end, center, row, $spacing-2);
+    position: absolute;
+    top: $spacing-6;
+    right: $spacing-6;
+  }
+
+  &__badge {
+    @include flex(center, center);
+    width: 88px;
+    height: 88px;
+    margin-bottom: $spacing-6;
+    background-color: $color-primary-light;
+    border-radius: $radius-full;
+  }
+
+  &__title {
+    max-width: 520px;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-extrabold;
+
+    @include respond-to('md') {
+      font-size: $font-size-xxl;
+    }
+  }
+
+  &__subtitle {
+    max-width: 420px;
+    margin-top: $spacing-3;
+    color: $color-text-muted;
+  }
+
+  &__actions {
+    @include flex(center, stretch, column, $spacing-3);
+    width: 100%;
+    max-width: 320px;
+    margin-top: $spacing-8;
+
+    @include respond-to('sm') {
+      @include flex(center, center, row, $spacing-4);
+      max-width: none;
+    }
+  }
+}
+
+.lang-button {
+  padding: $spacing-1 $spacing-3;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-muted;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+
+  &.is-active {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    color: $color-white;
+  }
+}
