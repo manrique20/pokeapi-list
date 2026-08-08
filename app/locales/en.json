@@ -2,6 +2,10 @@
   "app": {
     "name": "Pokédex"
   },
+  "common": {
+    "close": "Close",
+    "loading": "Loading"
+  },
   "splash": {
     "loading": "Loading..."
   },
@@ -27,6 +31,11 @@
     "pokedex": {
       "title": "Pokédex",
       "noResults": "No Pokémon found",
+      "error": "We couldn't load the Pokédex. Please try again.",
+      "retry": "Retry",
+      "number": "#{id}",
+      "favorite": "Mark {name} as favorite",
+      "unfavorite": "Remove {name} from favorites",
       "search": {
         "label": "Search",
         "placeholder": "Porcurar Pokemon"
@@ -37,6 +46,7 @@
         "types": "Types",
         "apply": "Apply",
         "cancel": "Cancel",
+        "error": "We couldn't apply the filters. Please try again.",
         "typeNames": {
           "normal": "Normal",
           "fire": "Fire",

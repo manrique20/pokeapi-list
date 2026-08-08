@@ -18,11 +18,12 @@ $color-accent: #FFCA28;
 $color-background: #F4F4F8;
 $color-surface: #FFFFFF;
 
-$color-text: #1F2937;
+$color-text: #121212;
 $color-text-muted: #6B7280;
 $color-border: #E5E7EB;
-
-$color-favorite: #EF4444;
+$color-number: #424242;
+$color-favorite: #E53935;
+$color-favorite-bg: rgba(#757575, 0.6);
 $color-success: #22C55E;
 $color-warning: #F59E0B;
 $color-error: #EF4444;
@@ -40,24 +41,45 @@ $color-filter-active: #0D47A1;
 $color-filter-border: #D6D6D6;
 $color-cancel-bg: #EEEEEE;
 
-$type-normal: #A8A77A;
-$type-fire: #EE8130;
-$type-water: #6390F0;
-$type-electric: #F7D02C;
-$type-grass: #7AC74C;
-$type-ice: #96D9D6;
-$type-fighting: #C22E28;
-$type-poison: #A33EA1;
-$type-ground: #E2BF65;
-$type-flying: #A98FF3;
-$type-psychic: #F95587;
-$type-bug: #A6B91A;
-$type-rock: #B6A136;
-$type-ghost: #735797;
-$type-dragon: #6F35FC;
-$type-dark: #705746;
-$type-steel: #B7B7CE;
-$type-fairy: #D685AD;
+$type-normal: #8BC34A;
+$type-fire: #FF9800;
+$type-water: #2196F3;
+$type-electric: #FDD835;
+$type-grass: #8BC34A;
+$type-ice: #3D8BFF;
+$type-fighting: #E53935;
+$type-poison: #9C27B0;
+$type-ground: #FDD835;
+$type-flying: #00BCD4;
+$type-psychic: #673AB7;
+$type-bug: #43A047;
+$type-rock: #795548;
+$type-ghost: #8E24AA;
+$type-dragon: #00ACC1;
+$type-dark: #8BC34A;
+$type-steel: #8BC34A;
+$type-fairy: #E91E63;
+
+$type-colors: (
+  normal: $type-normal,
+  fire: $type-fire,
+  water: $type-water,
+  electric: $type-electric,
+  grass: $type-grass,
+  ice: $type-ice,
+  fighting: $type-fighting,
+  poison: $type-poison,
+  ground: $type-ground,
+  flying: $type-flying,
+  psychic: $type-psychic,
+  bug: $type-bug,
+  rock: $type-rock,
+  ghost: $type-ghost,
+  dragon: $type-dragon,
+  dark: $type-dark,
+  steel: $type-steel,
+  fairy: $type-fairy,
+);
 
 // Typography
 $font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,

@@ -14,6 +14,7 @@ const emit = defineEmits<{
 }>()
 
 const drawer = ref<HTMLElement | null>(null)
+const { activate, deactivate } = useFocusTrap(drawer)
 
 function close() {
   emit('update:modelValue', false)
@@ -32,7 +33,20 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKeydown)
+  if (props.modelValue) deactivate()
 })
+
+watch(
+  () => props.modelValue,
+  (isOpen) => {
+    if (isOpen) {
+      activate()
+    } else {
+      deactivate()
+    }
+  },
+  { flush: 'post', immediate: true }
+)
 </script>
 
 <template>
@@ -51,7 +65,8 @@ onBeforeUnmount(() => {
         <button
           type="button"
           class="app-drawer__overlay"
-          aria-label="Close"
+          tabindex="-1"
+          :aria-label="$t('common.close')"
           data-testid="drawer-overlay"
           @click="close"
         />
@@ -61,7 +76,7 @@ onBeforeUnmount(() => {
             <button
               type="button"
               class="app-drawer__close"
-              aria-label="Close"
+              :aria-label="$t('common.close')"
               data-testid="drawer-close"
               @click="close"
             >

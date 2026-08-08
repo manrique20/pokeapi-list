@@ -1,10 +1,7 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'main' })
+import type { PokemonEntry } from '~/utils/pokemon'
 
-interface PokemonEntry {
-  name: string
-  url: string
-}
+definePageMeta({ layout: 'main' })
 
 const POKEMON_TYPES = [
   'normal',
@@ -27,29 +24,91 @@ const POKEMON_TYPES = [
   'fairy',
 ]
 
-const pokemonList = ref<PokemonEntry[]>([])
+const config = useRuntimeConfig()
+
+const {
+  data: pokemonListData,
+  status: pokemonListStatus,
+  refresh: refreshPokemonList,
+} = useFetch<{ results: PokemonEntry[] }>(`${config.public.pokeApiBase}/pokemon`, {
+  query: { limit: 20 },
+  server: false,
+  key: 'pokedex-pokemon-list',
+})
+
+const pokemonList = computed(() => pokemonListData.value?.results ?? [])
+const isLoadingPokemonList = computed(
+  () => pokemonListStatus.value === 'pending' || pokemonListStatus.value === 'idle'
+)
+const hasPokemonListError = computed(() => pokemonListStatus.value === 'error')
+
+interface PokemonDetail {
+  types: string[]
+}
+
+const pokemonDetails = ref(new Map<string, PokemonDetail>())
+const isLoadingDetails = ref(false)
+const hasDetailsError = ref(false)
+
+async function loadPokemonDetails(entries: PokemonEntry[]) {
+  isLoadingDetails.value = true
+  hasDetailsError.value = false
+  try {
+    const details = await Promise.all(
+      entries.map(async (entry) => ({
+        name: entry.name,
+        detail: await $fetch<{ types: { type: { name: string } }[] }>(
+          `${config.public.pokeApiBase}/pokemon/${entry.name}`
+        ),
+      }))
+    )
+    details.forEach(({ name, detail }) => {
+      pokemonDetails.value.set(name, {
+        types: detail.types.map((t) => t.type.name),
+      })
+    })
+  } catch {
+    hasDetailsError.value = true
+  } finally {
+    isLoadingDetails.value = false
+  }
+}
+
+watch(
+  pokemonListData,
+  (data) => {
+    if (data?.results?.length) loadPokemonDetails(data.results)
+  },
+  { immediate: true }
+)
+
+const isLoadingPokedex = computed(() => isLoadingPokemonList.value || isLoadingDetails.value)
+const hasPokedexError = computed(() => hasPokemonListError.value || hasDetailsError.value)
+
+const enrichedPokemonList = computed(() =>
+  pokemonList.value.map((entry) => ({
+    ...entry,
+    types: pokemonDetails.value.get(entry.name)?.types ?? [],
+  }))
+)
+
+async function retryPokedex() {
+  if (hasPokemonListError.value) {
+    await refreshPokemonList()
+  } else if (pokemonListData.value?.results) {
+    await loadPokemonDetails(pokemonListData.value.results)
+  }
+}
+
 const searchQuery = ref('')
 const isDrawerOpen = ref(false)
 const isTypesOpen = ref(true)
 const draftTypes = ref<string[]>([])
 const appliedTypes = ref<string[]>([])
 const typeCache = new Map<string, string[]>()
-
-function entryId(entry: PokemonEntry): string {
-  return entry.url.match(/\/pokemon\/(\d+)\//)?.[1] ?? '0'
-}
-
-function entryNumber(entry: PokemonEntry): string {
-  return `#${entryId(entry).padStart(3, '0')}`
-}
-
-function spriteUrl(entry: PokemonEntry): string {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${entryId(entry)}.png`
-}
-
-function capitalize(name: string): string {
-  return name.charAt(0).toUpperCase() + name.slice(1)
-}
+const isApplyingFilters = ref(false)
+const filterError = ref(false)
+let applyFiltersToken = 0
 
 function toggleType(typeName: string) {
   draftTypes.value = draftTypes.value.includes(typeName)
@@ -59,13 +118,14 @@ function toggleType(typeName: string) {
 
 function openDrawer() {
   draftTypes.value = [...appliedTypes.value]
+  filterError.value = false
   isDrawerOpen.value = true
 }
 
 async function loadTypeMembers(typeName: string) {
   if (typeCache.has(typeName)) return
   const data = await $fetch<{ pokemon: { pokemon: { name: string } }[] }>(
-    `https://pokeapi.co/api/v2/type/${typeName}`
+    `${config.public.pokeApiBase}/type/${typeName}`
   )
   typeCache.set(
     typeName,
@@ -74,24 +134,27 @@ async function loadTypeMembers(typeName: string) {
 }
 
 async function applyFilters() {
-  await Promise.all(draftTypes.value.map(loadTypeMembers))
-  appliedTypes.value = [...draftTypes.value]
-  isDrawerOpen.value = false
+  const token = ++applyFiltersToken
+  isApplyingFilters.value = true
+  filterError.value = false
+  try {
+    await Promise.all(draftTypes.value.map(loadTypeMembers))
+    if (token !== applyFiltersToken) return // superseded by a newer applyFilters() call
+    appliedTypes.value = [...draftTypes.value]
+    isDrawerOpen.value = false
+  } catch {
+    if (token === applyFiltersToken) filterError.value = true
+  } finally {
+    if (token === applyFiltersToken) isApplyingFilters.value = false
+  }
 }
 
 const filteredPokemon = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
-  return pokemonList.value.filter((entry) => {
+  return enrichedPokemonList.value.filter((entry) => {
     if (query && !entry.name.includes(query)) return false
     return appliedTypes.value.every((typeName) => typeCache.get(typeName)?.includes(entry.name))
   })
-})
-
-onMounted(async () => {
-  const data = await $fetch<{ results: PokemonEntry[] }>(
-    'https://pokeapi.co/api/v2/pokemon?limit=20'
-  )
-  pokemonList.value = data.results
 })
 </script>
 
@@ -99,58 +162,73 @@ onMounted(async () => {
   <section class="page">
     <h1 class="page__title">{{ $t('pages.pokedex.title') }}</h1>
 
-    <div class="pokedex-toolbar">
-      <label class="pokedex-search">
-        <span class="sr-only">{{ $t('pages.pokedex.search.label') }}</span>
-        <Icon
-          name="i-material-symbols:search-rounded"
-          size="20"
-          class="pokedex-search__icon"
-          aria-hidden="true"
-        />
-        <input
-          v-model="searchQuery"
-          type="search"
-          class="pokedex-search__input"
-          :placeholder="$t('pages.pokedex.search.placeholder')"
-          data-testid="pokedex-search"
-        />
-      </label>
+    <div v-if="isLoadingPokedex" class="pokedex-status" data-testid="pokedex-loading">
+      <PokeballLoader />
+    </div>
 
+    <div
+      v-else-if="hasPokedexError"
+      class="pokedex-status pokedex-status--error"
+      data-testid="pokedex-error"
+    >
+      <p>{{ $t('pages.pokedex.error') }}</p>
       <button
         type="button"
-        class="pokedex-filter-btn"
-        :aria-label="$t('pages.pokedex.filter.open')"
-        data-testid="pokedex-filter-open"
-        @click="openDrawer"
+        class="button button--primary"
+        data-testid="pokedex-retry"
+        @click="retryPokedex()"
       >
-        <Icon name="i-material-symbols:tune-rounded" size="24" aria-hidden="true" />
+        {{ $t('pages.pokedex.retry') }}
       </button>
     </div>
 
-    <ul class="pokedex-list" data-testid="pokedex-list">
-      <li
-        v-for="entry in filteredPokemon"
-        :key="entry.name"
-        class="pokedex-list__item"
-        data-testid="pokedex-item"
-      >
-        <img
-          :src="spriteUrl(entry)"
-          :alt="entry.name"
-          class="pokedex-list__sprite"
-          width="56"
-          height="56"
-          loading="lazy"
-        />
-        <span class="pokedex-list__number">{{ entryNumber(entry) }}</span>
-        <span class="pokedex-list__name">{{ capitalize(entry.name) }}</span>
-      </li>
-    </ul>
+    <template v-else>
+      <div class="pokedex-toolbar">
+        <label class="pokedex-search">
+          <span class="sr-only">{{ $t('pages.pokedex.search.label') }}</span>
+          <Icon
+            name="i-material-symbols:search-rounded"
+            size="20"
+            class="pokedex-search__icon"
+            aria-hidden="true"
+          />
+          <input
+            v-model="searchQuery"
+            type="search"
+            class="pokedex-search__input"
+            :placeholder="$t('pages.pokedex.search.placeholder')"
+            data-testid="pokedex-search"
+          />
+        </label>
 
-    <p v-if="filteredPokemon.length === 0 && pokemonList.length > 0" class="pokedex-list__empty" data-testid="pokedex-empty">
-      {{ $t('pages.pokedex.noResults') }}
-    </p>
+        <button
+          type="button"
+          class="pokedex-filter-btn"
+          :aria-label="$t('pages.pokedex.filter.open')"
+          data-testid="pokedex-filter-open"
+          @click="openDrawer"
+        >
+          <Icon name="i-material-symbols:tune-rounded" size="24" aria-hidden="true" />
+        </button>
+      </div>
+
+      <ul class="pokedex-list" data-testid="pokedex-list">
+        <PokemonCard
+          v-for="entry in filteredPokemon"
+          :key="entry.name"
+          :entry="entry"
+          :types="entry.types"
+        />
+      </ul>
+
+      <p
+        v-if="filteredPokemon.length === 0 && pokemonList.length > 0"
+        class="pokedex-list__empty"
+        data-testid="pokedex-empty"
+      >
+        {{ $t('pages.pokedex.noResults') }}
+      </p>
+    </template>
 
     <AppDrawer v-model="isDrawerOpen" :title="$t('pages.pokedex.filter.title')">
       <div class="filter-types">
@@ -196,10 +274,15 @@ onMounted(async () => {
       </div>
 
       <template #footer>
+        <p v-if="filterError" class="filter-actions__error" data-testid="filter-error">
+          {{ $t('pages.pokedex.filter.error') }}
+        </p>
         <button
           type="button"
           class="button filter-actions__apply"
           data-testid="filter-apply"
+          :disabled="isApplyingFilters"
+          :aria-busy="isApplyingFilters"
           @click="applyFilters"
         >
           {{ $t('pages.pokedex.filter.apply') }}
@@ -208,6 +291,7 @@ onMounted(async () => {
           type="button"
           class="button filter-actions__cancel"
           data-testid="filter-cancel"
+          :disabled="isApplyingFilters"
           @click="isDrawerOpen = false"
         >
           {{ $t('pages.pokedex.filter.cancel') }}
@@ -216,3 +300,7 @@ onMounted(async () => {
     </AppDrawer>
   </section>
 </template>
+
+<style lang="scss">
+@use '~/assets/scss/components/_pokeball-loader.scss' as *;
+</style>

@@ -4,6 +4,16 @@
 @use '../_variables.scss' as *;
 @use '../_mixins.scss' as *;
 
+.pokedex-status {
+  @include flex(center, center, column, $spacing-4);
+  margin-top: $spacing-10;
+  text-align: center;
+
+  &--error {
+    color: $color-error;
+  }
+}
+
 .pokedex-toolbar {
   @include flex(center, center, row, $spacing-3);
   margin-top: $spacing-6;
@@ -66,34 +76,16 @@
 }
 
 .pokedex-list {
-  @include flex(center, stretch, column);
-  margin-top: $spacing-6;
+  list-style: none;
+  margin: $spacing-6 0 0;
+  padding: 0;
 
-  &__item {
-    @include flex(flex-start, center, row, $spacing-3);
-    width: 100%;
-    max-width: 420px;
-    padding: $spacing-2 $spacing-4;
-    border-bottom: 1px solid $color-border;
+  @include respond-to('sm') {
+    @include grid(2, $spacing-4);
   }
 
-  &__sprite {
-    width: 56px;
-    height: 56px;
-    object-fit: contain;
-  }
-
-  &__number {
-    min-width: 44px;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    color: $color-text-muted;
-  }
-
-  &__name {
-    font-size: $font-size-md;
-    font-weight: $font-weight-medium;
-    color: $color-text;
+  @include respond-to('lg') {
+    @include grid(3, $spacing-4);
   }
 
   &__empty {
@@ -174,6 +166,12 @@
 }
 
 .filter-actions {
+  &__error {
+    color: $color-error;
+    font-size: $font-size-sm;
+    text-align: center;
+  }
+
   &__apply {
     background-color: $color-nav-active;
     color: $color-white;

@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="pokeball-loader" role="status" aria-label="Loading">
+  <div class="pokeball-loader" role="status" :aria-label="$t('common.loading')">
     <span class="pokeball-loader__shine" aria-hidden="true" />
     <span class="pokeball-loader__button" aria-hidden="true" />
   </div>

@@ -12,6 +12,12 @@ export default defineNuxtConfig({
 
   modules: ['@pinia/nuxt', '@nuxt/icon', '@nuxtjs/i18n'],
 
+  runtimeConfig: {
+    public: {
+      pokeApiBase: 'https://pokeapi.co/api/v2',
+    },
+  },
+
   css: ['~/assets/scss/main.scss'],
 
   vite: {

@@ -14,10 +14,22 @@ const fireTypeStub = {
   pokemon: [{ pokemon: { name: 'charmander', url: '' } }],
 }
 
+const detailStubs: Record<string, { types: { type: { name: string } }[] }> = {
+  pikachu: { types: [{ type: { name: 'electric' } }] },
+  charmander: { types: [{ type: { name: 'fire' } }] },
+  bulbasaur: { types: [{ type: { name: 'grass' } }, { type: { name: 'poison' } }] },
+  squirtle: { types: [{ type: { name: 'water' } }] },
+  eevee: { types: [{ type: { name: 'normal' } }] },
+}
+
 describe('Pokédex list & filters', () => {
   beforeEach(() => {
     cy.intercept('https://pokeapi.co/api/v2/pokemon?limit=20', { body: pokemonListStub }).as('pokemonList')
     cy.intercept('https://pokeapi.co/api/v2/type/fire', { body: fireTypeStub }).as('typeFire')
+    cy.intercept('https://pokeapi.co/api/v2/pokemon/*', (req) => {
+      const name = req.url.split('/').filter(Boolean).pop() ?? ''
+      req.reply({ body: detailStubs[name] })
+    }).as('pokemonDetail')
 
     cy.visit('/pokedex')
     cy.waitForHydration()
@@ -26,7 +38,7 @@ describe('Pokédex list & filters', () => {
 
   it('renders the Pokémon list', () => {
     cy.get('[data-testid="pokedex-item"]').should('have.length', 5)
-    cy.get('[data-testid="pokedex-item"]').first().should('contain.text', '#025')
+    cy.get('[data-testid="pokedex-item"]').first().should('contain.text', 'N°025')
     cy.get('[data-testid="pokedex-item"]').contains('Pikachu')
     cy.get('[data-testid="pokedex-item"]').contains('Charmander')
   })

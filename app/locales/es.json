@@ -2,6 +2,10 @@
   "app": {
     "name": "Pokédex"
   },
+  "common": {
+    "close": "Cerrar",
+    "loading": "Cargando"
+  },
   "splash": {
     "loading": "Cargando..."
   },
@@ -27,6 +31,11 @@
     "pokedex": {
       "title": "Pokédex",
       "noResults": "No se encontraron Pokémon",
+      "error": "No se pudo cargar la Pokédex. Inténtalo de nuevo.",
+      "retry": "Reintentar",
+      "number": "N°{id}",
+      "favorite": "Marcar a {name} como favorito",
+      "unfavorite": "Quitar a {name} de favoritos",
       "search": {
         "label": "Buscar",
         "placeholder": "Porcurar Pokemon"
@@ -37,6 +46,7 @@
         "types": "Tipos",
         "apply": "Aplicar",
         "cancel": "Cancelar",
+        "error": "No se pudieron aplicar los filtros. Inténtalo de nuevo.",
         "typeNames": {
           "normal": "Normal",
           "fire": "Fuego",
