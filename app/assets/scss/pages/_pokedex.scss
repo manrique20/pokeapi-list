@@ -1,4 +1,6 @@
 
+@use 'sass:color';
+
 @use '../_variables.scss' as *;
 @use '../_mixins.scss' as *;
 
@@ -188,7 +190,7 @@
 
     &:hover,
     &:focus-visible {
-      background-color: darken($color-cancel-bg, 4%);
+      background-color: color.adjust($color-cancel-bg, $lightness: -4%);
     }
   }
 }
