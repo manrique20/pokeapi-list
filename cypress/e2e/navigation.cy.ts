@@ -4,7 +4,8 @@ describe('Footer navigation', () => {
   beforeEach(() => {
     cy.visit('/onboarding')
     cy.waitForHydration()
-    cy.get('[data-testid="onboarding-start"]').click()
+    cy.get('[data-testid="onboarding-continue"]').click()
+    cy.get('[data-testid="onboarding-continue"]').click()
     cy.url().should('include', '/pokedex')
   })
 

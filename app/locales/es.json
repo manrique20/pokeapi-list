@@ -6,10 +6,16 @@
     "loading": "Cargando..."
   },
   "onboarding": {
-    "title": "Bienvenido a la Pokédex",
-    "subtitle": "Explora, descubre y guarda tus Pokémon favoritos en un solo lugar.",
-    "start": "Empezar",
-    "skip": "Saltar"
+    "step1": {
+      "title": "Todos los Pokémon en un solo lugar",
+      "text": "Accede a una amplia lista de Pokémon de todas las generaciones creadas por Nintendo"
+    },
+    "step2": {
+      "title": "Mantén tu Pokédex actualizada",
+      "text": "Regístrate y guarda tu perfil, Pokémon favoritos, configuraciones y mucho más en la aplicación"
+    },
+    "continue": "Continuar",
+    "start": "Empecemos"
   },
   "footer": {
     "pokedex": "Pokédex",
@@ -20,7 +26,38 @@
   "pages": {
     "pokedex": {
       "title": "Pokédex",
-      "empty": "Próximamente: lista de Pokémon con búsqueda, tipos y compartir."
+      "noResults": "No se encontraron Pokémon",
+      "search": {
+        "label": "Buscar",
+        "placeholder": "Porcurar Pokemon"
+      },
+      "filter": {
+        "open": "Abrir filtros",
+        "title": "Filtra por tus preferencias",
+        "types": "Tipos",
+        "apply": "Aplicar",
+        "cancel": "Cancelar",
+        "typeNames": {
+          "normal": "Normal",
+          "fire": "Fuego",
+          "water": "Agua",
+          "electric": "Eléctrico",
+          "grass": "Planta",
+          "ice": "Hielo",
+          "fighting": "Lucha",
+          "poison": "Veneno",
+          "ground": "Tierra",
+          "flying": "Volador",
+          "psychic": "Psíquico",
+          "bug": "Bicho",
+          "rock": "Roca",
+          "ghost": "Fantasma",
+          "dragon": "Dragón",
+          "dark": "Siniestro",
+          "steel": "Acero",
+          "fairy": "Hada"
+        }
+      }
     },
     "regions": {
       "title": "Regiones",

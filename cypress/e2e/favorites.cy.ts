@@ -4,7 +4,8 @@ describe('Favorites store persistence', () => {
   beforeEach(() => {
     cy.visit('/onboarding')
     cy.waitForHydration()
-    cy.get('[data-testid="onboarding-start"]').click()
+    cy.get('[data-testid="onboarding-continue"]').click()
+    cy.get('[data-testid="onboarding-continue"]').click()
   })
 
   it('starts with an empty list of favorites', () => {

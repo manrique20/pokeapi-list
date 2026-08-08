@@ -1,20 +1,12 @@
-// ============================================================
-// MAIN ENTRY
-// Global stylesheet entry (registered in nuxt.config `css`).
-// Partials are grouped by concern: variables, mixins, base,
-// one file per component under components/, one per page
-// under pages/.
-// ============================================================
-
 @use './_variables.scss' as *;
 @use './_mixins.scss' as *;
 @use './_base.scss' as *;
 
 // Components
-@use './components/_pokeball-loader.scss' as *;
+@use './components/_app-drawer.scss' as *;
 @use './components/_app-footer-nav.scss' as *;
 
 // Pages
-@use './pages/_splash.scss' as *;
-@use './pages/_onboarding.scss' as *;
 @use './pages/_main.scss' as *;
+@use './pages/_onboarding.scss' as *;
+@use './pages/_pokedex.scss' as *;

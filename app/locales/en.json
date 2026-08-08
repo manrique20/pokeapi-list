@@ -6,10 +6,16 @@
     "loading": "Loading..."
   },
   "onboarding": {
-    "title": "Welcome to the Pokédex",
-    "subtitle": "Explore, discover and save your favorite Pokémon in one place.",
-    "start": "Get Started",
-    "skip": "Skip"
+    "step1": {
+      "title": "All Pokémon in one place",
+      "text": "Access a wide list of Pokémon from all generations created by Nintendo"
+    },
+    "step2": {
+      "title": "Keep your Pokédex up to date",
+      "text": "Sign up and save your profile, favorite Pokémon, settings and much more in the app"
+    },
+    "continue": "Continue",
+    "start": "Let's get started"
   },
   "footer": {
     "pokedex": "Pokédex",
@@ -20,7 +26,38 @@
   "pages": {
     "pokedex": {
       "title": "Pokédex",
-      "empty": "Coming soon: Pokémon list with search, types and sharing."
+      "noResults": "No Pokémon found",
+      "search": {
+        "label": "Search",
+        "placeholder": "Porcurar Pokemon"
+      },
+      "filter": {
+        "open": "Open filters",
+        "title": "Filter by your preferences",
+        "types": "Types",
+        "apply": "Apply",
+        "cancel": "Cancel",
+        "typeNames": {
+          "normal": "Normal",
+          "fire": "Fire",
+          "water": "Water",
+          "electric": "Electric",
+          "grass": "Grass",
+          "ice": "Ice",
+          "fighting": "Fighting",
+          "poison": "Poison",
+          "ground": "Ground",
+          "flying": "Flying",
+          "psychic": "Psychic",
+          "bug": "Bug",
+          "rock": "Rock",
+          "ghost": "Ghost",
+          "dragon": "Dragon",
+          "dark": "Dark",
+          "steel": "Steel",
+          "fairy": "Fairy"
+        }
+      }
     },
     "regions": {
       "title": "Regions",

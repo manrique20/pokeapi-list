@@ -1,11 +1,11 @@
-// ============================================================
-// PAGES: MAIN (shared)
-// Common layout for the four sections rendered inside the
-// footer layout: page container, title, empty states.
-// ============================================================
-
 @use '../_variables.scss' as *;
 @use '../_mixins.scss' as *;
+
+.app-shell__content {
+  @include respond-to('lg') {
+    padding-left: 88px;
+  }
+}
 
 .page {
   width: 100%;

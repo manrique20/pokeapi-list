@@ -15,3 +15,8 @@ onMounted(() => {
     <p class="splash__text">{{ $t('splash.loading') }}</p>
   </main>
 </template>
+<style lang="scss">
+@use '~/assets/scss/pages/_splash.scss' as *;
+@use '~/assets/scss/components/_pokeball-loader.scss' as *;
+
+</style>

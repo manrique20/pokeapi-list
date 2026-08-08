@@ -1,6 +1,8 @@
 // ============================================================
 // COMPONENT: APP FOOTER NAV
 // Fixed bottom navigation with the four main sections.
+// On desktop (>= lg) it becomes a fixed left sidebar with
+// fixed-size blue buttons (active state darker).
 // ============================================================
 
 @use '../_variables.scss' as *;
@@ -18,6 +20,18 @@
   background-color: $color-surface;
   border-top: 1px solid $color-border;
 
+  @include respond-to('lg') {
+    @include flex(flex-start, center, column, $spacing-3);
+    top: 0;
+    bottom: 0;
+    right: auto;
+    width: 88px;
+    height: auto;
+    padding: $spacing-6 $spacing-3;
+    border-top: none;
+    border-right: 1px solid $color-border;
+  }
+
   &__item {
     @include flex(center, center, column, $spacing-1);
     color: $color-text-muted;
@@ -27,12 +41,39 @@
 
     &:hover,
     &:focus-visible {
-      color: $color-primary;
+      color: $color-nav;
     }
 
     &.is-active {
-      color: $color-primary;
+      color: $color-nav-active;
       font-weight: $font-weight-semibold;
+    }
+
+    @include respond-to('lg') {
+      width: 64px;
+      height: 64px;
+      border-radius: $radius-lg;
+      background-color: $color-white;
+      border: 1px solid $color-nav;
+      color: $color-nav;
+      transition:
+        background-color $transition-fast,
+        border-color $transition-fast,
+        color $transition-fast;
+
+      &:hover,
+      &:focus-visible {
+        background-color: $color-white;
+        border-color: $color-nav-active;
+        color: $color-nav-active;
+      }
+
+      &.is-active {
+        background-color: $color-nav-active;
+        border-color: $color-nav-active;
+        color: $color-white;
+        font-weight: $font-weight-semibold;
+      }
     }
   }
 

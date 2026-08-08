@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// CSS-only animated pokeball. Styling lives in
-// assets/scss/components/_pokeball-loader.scss.
 </script>
 
 <template>

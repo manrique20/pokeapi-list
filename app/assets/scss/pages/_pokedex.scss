@@ -1,0 +1,207 @@
+
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+
+.pokedex-toolbar {
+  @include flex(center, center, row, $spacing-3);
+  margin-top: $spacing-6;
+}
+
+.pokedex-search {
+  @include flex(flex-start, center, row, $spacing-2);
+  position: relative;
+  flex: 1;
+  max-width: 420px;
+  height: 44px;
+  padding: 0 $spacing-4;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+
+  &:focus-within {
+    border-color: $color-nav;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: $color-text-muted;
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    font-size: $font-size-md;
+    color: $color-text;
+    background: none;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      color: $color-text-muted;
+    }
+  }
+}
+
+.pokedex-filter-btn {
+  @include flex(center, center);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: $color-nav;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition:
+    background-color $transition-fast,
+    border-color $transition-fast;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-nav;
+    background-color: $color-white;
+  }
+}
+
+.pokedex-list {
+  @include flex(center, stretch, column);
+  margin-top: $spacing-6;
+
+  &__item {
+    @include flex(flex-start, center, row, $spacing-3);
+    width: 100%;
+    max-width: 420px;
+    padding: $spacing-2 $spacing-4;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__sprite {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+
+  &__number {
+    min-width: 44px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text-muted;
+  }
+
+  &__name {
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    color: $color-text;
+  }
+
+  &__empty {
+    margin-top: $spacing-8;
+    color: $color-text-muted;
+    text-align: center;
+  }
+}
+
+.filter-types {
+  &__header {
+    @include flex(space-between, center, row);
+    width: 100%;
+    padding: $spacing-3 $spacing-2;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__chevron {
+    transition: transform $transition-fast;
+
+    &.is-open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__list {
+    @include flex(center, stretch, column, $spacing-3);
+    padding: $spacing-2;
+
+    @include respond-to('lg') {
+      @include grid(2, $spacing-3);
+    }
+  }
+}
+
+.filter-type {
+  @include flex(space-between, center, row-reverse, $spacing-2);
+  width: 100%;
+  cursor: pointer;
+    padding: $spacing-2;
+  
+  @include respond-to('lg') {
+    @include flex(flex-start, center, row, $spacing-2);
+    width: auto;
+    padding: $spacing-1;
+
+  }
+
+  &__box {
+    @include flex(center, center);
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: $color-white;
+    background-color: $color-white;
+    border: 1px solid $color-filter-border;
+    border-radius: $radius-sm;
+    transition:
+      background-color $transition-fast,
+      border-color $transition-fast;
+  }
+
+  &__input:checked + &__box {
+    background-color: $color-filter-active;
+    border-color: $color-filter-active;
+  }
+
+  &__label {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+  }
+}
+
+.filter-actions {
+  &__apply {
+    background-color: $color-nav-active;
+    color: $color-white;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-filter-active;
+    }
+  }
+
+  &__cancel {
+    background-color: $color-cancel-bg;
+    color: $color-black;
+
+    &:hover,
+    &:focus-visible {
+      background-color: darken($color-cancel-bg, 4%);
+    }
+  }
+}
+
+.collapse-enter-active,
+.collapse-leave-active {
+  transition:
+    opacity $transition-base,
+    transform $transition-base;
+}
+
+.collapse-enter-from,
+.collapse-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}

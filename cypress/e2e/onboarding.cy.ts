@@ -11,14 +11,27 @@ describe('Onboarding flow', () => {
     cy.url({ timeout: 10_000 }).should('include', '/onboarding')
   })
 
-  it('lets the user complete onboarding and land on the pokedex', () => {
+  it('walks through the two steps and lands on the pokedex', () => {
     cy.visit('/onboarding')
     cy.waitForHydration()
 
-    cy.get('[data-testid="onboarding-start"]').should('be.visible')
-    cy.get('[data-testid="onboarding-skip"]').should('be.visible')
+    cy.get('[data-testid="onboarding-title"]').should('have.text', 'Todos los Pokémon en un solo lugar')
+    cy.get('[data-testid="onboarding-image"]').should('have.attr', 'src').and('include', 'ic_step_one.png')
+    cy.get('[data-testid="onboarding-continue"]').should('have.text', 'Continuar')
 
-    cy.get('[data-testid="onboarding-start"]').click()
+    cy.get('[data-testid="onboarding-dot"]').eq(0).should('have.class', 'is-active')
+    cy.get('[data-testid="onboarding-dot"]').eq(1).should('not.have.class', 'is-active')
+
+    cy.get('[data-testid="onboarding-continue"]').click()
+
+    cy.get('[data-testid="onboarding-title"]').should('have.text', 'Mantén tu Pokédex actualizada')
+    cy.get('[data-testid="onboarding-image"]').should('have.attr', 'src').and('include', 'ic_step_two.png')
+    cy.get('[data-testid="onboarding-continue"]').should('have.text', 'Empecemos')
+
+    cy.get('[data-testid="onboarding-dot"]').eq(0).should('not.have.class', 'is-active')
+    cy.get('[data-testid="onboarding-dot"]').eq(1).should('have.class', 'is-active')
+
+    cy.get('[data-testid="onboarding-continue"]').click()
 
     cy.url().should('include', '/pokedex')
     cy.get('[data-testid="footer-nav"]').should('be.visible')
@@ -27,7 +40,8 @@ describe('Onboarding flow', () => {
   it('redirects returning users straight to the pokedex', () => {
     cy.visit('/onboarding')
     cy.waitForHydration()
-    cy.get('[data-testid="onboarding-start"]').click()
+    cy.get('[data-testid="onboarding-continue"]').click()
+    cy.get('[data-testid="onboarding-continue"]').click()
     cy.url().should('include', '/pokedex')
 
     cy.visit('/')
@@ -40,10 +54,10 @@ describe('Onboarding flow', () => {
     cy.waitForHydration()
 
     cy.get('[data-testid="lang-en"]').click()
-    cy.get('[data-testid="onboarding-start"]').should('have.text', 'Get Started')
-    cy.get('[data-testid="onboarding-skip"]').should('have.text', 'Skip')
+    cy.get('[data-testid="onboarding-continue"]').should('have.text', 'Continue')
+    cy.get('[data-testid="onboarding-title"]').should('have.text', 'All Pokémon in one place')
 
     cy.get('[data-testid="lang-es"]').click()
-    cy.get('[data-testid="onboarding-start"]').should('have.text', 'Empezar')
+    cy.get('[data-testid="onboarding-continue"]').should('have.text', 'Continuar')
   })
 })
