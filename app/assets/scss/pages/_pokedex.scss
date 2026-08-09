@@ -27,7 +27,7 @@
   border-radius: $radius-md;
 
   &:focus-within {
-    border-color: $color-nav;
+    border-color: $color-primary;
   }
 
   &__icon {
@@ -55,7 +55,7 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  color: $color-nav;
+  color: $color-primary;
   background-color: $color-surface;
   border: 1px solid $color-border;
   border-radius: $radius-md;
@@ -66,7 +66,7 @@
 
   &:hover,
   &:focus-visible {
-    border-color: $color-nav;
+    border-color: $color-primary;
     background-color: $color-white;
   }
 }
@@ -172,6 +172,10 @@
     color: $color-error;
     font-size: $font-size-sm;
     text-align: center;
+
+    @include respond-to('md') {
+      flex-basis: 100%;
+    }
   }
 
   &__apply {
@@ -191,6 +195,13 @@
     &:hover,
     &:focus-visible {
       background-color: color.adjust($color-cancel-bg, $lightness: -4%);
+    }
+  }
+
+  &__apply,
+  &__cancel {
+    @include respond-to('md') {
+      flex: 1;
     }
   }
 }

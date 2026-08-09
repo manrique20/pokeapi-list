@@ -36,7 +36,7 @@
 
     &:hover,
     &:focus-visible {
-      color: $color-nav;
+      color: $color-primary;
     }
 
     &.is-active {
@@ -49,8 +49,8 @@
       height: 64px;
       border-radius: $radius-lg;
       background-color: $color-white;
-      border: 1px solid $color-nav;
-      color: $color-nav;
+      border: 1px solid $color-primary;
+      color: $color-primary;
       transition:
         background-color $transition-fast,
         border-color $transition-fast,
