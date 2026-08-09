@@ -14,10 +14,6 @@ const fireTypeStub = {
   pokemon: [{ pokemon: { name: 'charmander', url: '' } }],
 }
 
-// Shape covers both uses of GET /pokemon/{name}: the list page's
-// enrichment fetch (only reads `types`) and the detail page's primary
-// fetch (reads everything) — any card navigated to from these tests
-// should be able to settle into a normal (non-error) detail render.
 const detailStubs: Record<
   string,
   {

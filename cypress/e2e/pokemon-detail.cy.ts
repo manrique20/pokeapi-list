@@ -25,9 +25,6 @@ const abilityStub = {
   names: [{ name: 'Espesura', language: { name: 'es' } }],
 }
 
-// Real damage relations for grass/poison — verified by hand against the
-// Figma capture when computeWeaknesses() was built: Fuego/Hielo/Volador/
-// Psíquico, with Tierra neutralized because Planta resists it.
 const grassTypeStub = {
   damage_relations: {
     double_damage_from: [

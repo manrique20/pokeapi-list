@@ -2,10 +2,6 @@
 
 import PokeballLoader from '../../app/components/ui/PokeballLoader.vue'
 
-// The component runner has no Nuxt i18n plugin (see SKILL.md), but
-// PokeballLoader now reads its aria-label via `$t`. Stub `$t` as an
-// identity function so the mount doesn't throw; assertions below check
-// against the raw i18n key rather than a translated string.
 const mountOptions = { global: { mocks: { $t: (key: string) => key } } }
 
 describe('PokeballLoader', () => {
