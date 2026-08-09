@@ -39,4 +39,14 @@ describe('Footer navigation', () => {
     cy.get('a[href="/pokedex"]').click()
     cy.url().should('include', '/pokedex')
   })
+
+  it('shows the coming-soon empty state on regions and profile', () => {
+    cy.get('a[href="/regions"]').click()
+    cy.contains('¡Muy pronto disponible!')
+    cy.get('img[src="/empty/ic_comming_soon.svg"]').should('be.visible')
+
+    cy.get('a[href="/profile"]').click()
+    cy.contains('¡Muy pronto disponible!')
+    cy.get('img[src="/empty/ic_comming_soon.svg"]').should('be.visible')
+  })
 })

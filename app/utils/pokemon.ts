@@ -61,7 +61,7 @@ const POKEMON_TYPE_ICONS: Record<string, string> = {
   flying: 'i-material-symbols:air-rounded',
   psychic: 'i-material-symbols:psychology-rounded',
   bug: 'i-material-symbols:bug-report-rounded',
-  rock: 'i-material-symbols:terrain-rounded',
+  rock: 'i-material-symbols:landscape-2-rounded',
   ghost: 'i-material-symbols:sentiment-very-dissatisfied-rounded',
   dragon: 'i-material-symbols:local-fire-department-rounded',
   dark: 'i-material-symbols:dark-mode-rounded',

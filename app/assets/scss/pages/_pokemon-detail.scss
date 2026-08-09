@@ -91,7 +91,7 @@
   &__name {
     margin-top: $spacing-6;
     font-size: $font-size-xxl;
-    font-weight: $font-weight-extrabold;
+    font-weight: $font-weight-bold;
     color: $color-text;
   }
 
@@ -99,13 +99,12 @@
     margin-top: $spacing-1;
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
-    color: $color-text-muted;
+    color: $color-number;
   }
 
   &__description {
     margin-top: $spacing-6;
     padding-top: $spacing-6;
-    border-top: 1px solid $color-border;
     color: $color-text-muted;
     line-height: $line-height-base;
   }
@@ -139,8 +138,7 @@
 }
 
 .stat-card {
-  padding: $spacing-4;
-  border: 1px solid $color-border;
+  padding: 0;
   border-radius: $radius-lg;
   text-align: center;
 
@@ -149,15 +147,22 @@
     margin-bottom: $spacing-2;
     font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
-    color: $color-text-muted;
+    color: $color-number;
     text-transform: uppercase;
+  }
+
+  &__icon {
+    flex-shrink: 0;
   }
 
   &__value {
     display: block;
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
+    border: 1px solid $color-border;
     color: $color-text;
+    padding:  $spacing-4;
+    border-radius: $radius-lg;
   }
 }
 
@@ -182,5 +187,13 @@
     font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     color: $color-text-muted;
+
+    span {
+      @include flex(flex-start, center, row, $spacing-1);
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
   }
 }

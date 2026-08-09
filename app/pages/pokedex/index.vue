@@ -5,53 +5,83 @@ definePageMeta({ layout: 'main' })
 
 const config = useRuntimeConfig()
 
-const {
-  data: pokemonListData,
-  status: pokemonListStatus,
-  refresh: refreshPokemonList,
-} = useFetch<{ results: PokemonEntry[] }>(`${config.public.pokeApiBase}/pokemon`, {
-  query: { limit: 20 },
-  server: false,
-  key: 'pokedex-pokemon-list',
-})
+interface PokemonListPage {
+  results: PokemonEntry[]
+  next: string | null
+}
 
-const pokemonList = computed(() => pokemonListData.value?.results ?? [])
-const isLoadingPokemonList = computed(
-  () => pokemonListStatus.value === 'pending' || pokemonListStatus.value === 'idle'
-)
-const hasPokemonListError = computed(() => pokemonListStatus.value === 'error')
+const pokemonEntries = ref<PokemonEntry[]>([])
+const nextPageUrl = ref<string | null>(`${config.public.pokeApiBase}/pokemon?limit=20`)
+const hasMore = computed(() => nextPageUrl.value !== null)
+const isLoadingFirstPage = ref(true)
+const isLoadingMore = ref(false)
+const hasListError = ref(false)
+const hasLoadMoreError = ref(false)
 
 const {
   cache: pokemonDetails,
-  isLoading: isLoadingDetails,
   hasError: hasDetailsError,
   load: loadPokemonDetails,
 } = usePokemonDetails()
 
-watch(
-  pokemonListData,
-  (data) => {
-    if (data?.results?.length) loadPokemonDetails(data.results.map((entry) => entry.name))
-  },
-  { immediate: true }
-)
+// Plain (non-reactive) concurrency guard, kept separate from the
+// UI-facing loading refs below — isLoadingFirstPage starts `true` so
+// the spinner shows immediately, which would otherwise make the very
+// first loadNextPage() call cancel itself if it also used that ref
+// as its "already busy" check.
+let isFetchingPage = false
 
-const isLoadingPokedex = computed(() => isLoadingPokemonList.value || isLoadingDetails.value)
-const hasPokedexError = computed(() => hasPokemonListError.value || hasDetailsError.value)
+async function loadNextPage() {
+  if (!nextPageUrl.value || isFetchingPage) return
+  isFetchingPage = true
+  const isFirstPage = pokemonEntries.value.length === 0
+
+  if (isFirstPage) {
+    isLoadingFirstPage.value = true
+    hasListError.value = false
+  } else {
+    isLoadingMore.value = true
+    hasLoadMoreError.value = false
+  }
+
+  try {
+    const data = await $fetch<PokemonListPage>(nextPageUrl.value)
+    pokemonEntries.value = [...pokemonEntries.value, ...data.results]
+    nextPageUrl.value = data.next
+    await loadPokemonDetails(data.results.map((entry) => entry.name))
+    if (hasDetailsError.value) {
+      if (isFirstPage) hasListError.value = true
+      else hasLoadMoreError.value = true
+    }
+  } catch {
+    if (isFirstPage) hasListError.value = true
+    else hasLoadMoreError.value = true
+  } finally {
+    if (isFirstPage) isLoadingFirstPage.value = false
+    else isLoadingMore.value = false
+    isFetchingPage = false
+  }
+}
+
+onMounted(() => {
+  loadNextPage()
+})
+
+const loadMoreTrigger = ref<HTMLElement | null>(null)
+useInfiniteScroll(loadMoreTrigger, loadNextPage)
+
+const isLoadingPokedex = computed(() => isLoadingFirstPage.value)
+const hasPokedexError = computed(() => hasListError.value)
 
 const enrichedPokemonList = computed(() =>
-  pokemonList.value.map((entry) => ({
+  pokemonEntries.value.map((entry) => ({
     ...entry,
     types: pokemonDetails.value.get(entry.name)?.types ?? [],
   }))
 )
 
 async function retryPokedex() {
-  if (hasPokemonListError.value) {
-    await refreshPokemonList()
-  } else if (pokemonListData.value?.results) {
-    await loadPokemonDetails(pokemonListData.value.results.map((entry) => entry.name))
-  }
+  await loadNextPage()
 }
 
 const searchQuery = ref('')
@@ -174,8 +204,21 @@ const filteredPokemon = computed(() => {
         </li>
       </ul>
 
+      <div v-if="hasMore" ref="loadMoreTrigger" class="pokedex-load-more" data-testid="pokedex-load-more">
+        <PokeballLoader v-if="isLoadingMore" />
+        <button
+          v-else-if="hasLoadMoreError"
+          type="button"
+          class="button filter-actions__apply"
+          data-testid="pokedex-load-more-retry"
+          @click="loadNextPage"
+        >
+          {{ $t('pages.pokedex.retry') }}
+        </button>
+      </div>
+
       <p
-        v-if="filteredPokemon.length === 0 && pokemonList.length > 0"
+        v-if="filteredPokemon.length === 0 && pokemonEntries.length > 0"
         class="pokedex-list__empty"
         data-testid="pokedex-empty"
       >

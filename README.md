@@ -32,7 +32,7 @@ Open http://localhost:3000 — you land on the splash screen and, on first visit
 | `npm run generate` | Static generation |
 | `npm run typecheck` | TypeScript/Vue type check |
 | `npm run test:e2e` | Cypress E2E (run `npm run dev` first) |
-| `npm run test:component` | Cypress component tests (uses root `vite.config.ts`, Nuxt ignores it) |
+| `npm run test:component` | Cypress component tests (uses `cypress.vite.config.ts`, kept out of Nuxt's root) |
 | `npm run test:open` | Cypress interactive runner |
 
 ## Project structure

@@ -100,8 +100,6 @@ const hasError = computed(() => pokemonStatus.value === 'error' || hasExtrasErro
 const primaryType = computed(() => pokemon.value?.types[0]?.type.name ?? 'normal')
 const isFavorite = computed(() => favoritesStore.isFavorite(name))
 
-// Dream World artwork is much higher-res than the pixel sprite, but it's
-// missing for some newer Pokémon — fall back to the pixel sprite then.
 const heroSpriteUrl = computed(() => {
   if (!pokemon.value) return ''
   return pokemon.value.sprites.other.dream_world.front_default ?? spriteUrlById(pokemon.value.id)
@@ -127,7 +125,7 @@ function formatPercent(value: number): string {
 
 const statCards = computed(() => [
   {
-    icon: 'i-material-symbols:monitor-weight-outline-rounded',
+    icon: '/pokedex/ic_weight.svg',
     labelKey: 'pages.pokemonDetail.weight',
     value: `${((pokemon.value?.weight ?? 0) / 10).toLocaleString(locale.value, {
       minimumFractionDigits: 1,
@@ -135,15 +133,15 @@ const statCards = computed(() => [
     })} kg`,
   },
   {
-    icon: 'i-material-symbols:straighten-rounded',
+    icon: '/pokedex/ic_height.svg',
     labelKey: 'pages.pokemonDetail.height',
     value: `${((pokemon.value?.height ?? 0) / 10).toLocaleString(locale.value, {
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     })} m`,
   },
-  { icon: 'i-material-symbols:category-rounded', labelKey: 'pages.pokemonDetail.category', value: genus.value },
-  { icon: 'i-material-symbols:bolt-rounded', labelKey: 'pages.pokemonDetail.ability', value: abilityName.value },
+  { icon: '/pokedex/ic_categories.svg', labelKey: 'pages.pokemonDetail.category', value: genus.value },
+  { icon: '/pokedex/ic_pokeball.svg', labelKey: 'pages.pokemonDetail.ability', value: abilityName.value },
 ])
 
 function goBack() {
@@ -258,7 +256,7 @@ async function retry() {
       <div class="pokemon-detail__stats">
         <div v-for="stat in statCards" :key="stat.labelKey" class="stat-card">
           <span class="stat-card__label">
-            <Icon :name="stat.icon" size="16" aria-hidden="true" />
+            <img :src="stat.icon" alt="" width="16" height="16" class="stat-card__icon" />
             {{ $t(stat.labelKey) }}
           </span>
           <span class="stat-card__value">{{ stat.value }}</span>
@@ -272,8 +270,14 @@ async function retry() {
           <div class="gender-bar__female" :style="{ width: femalePercent + '%' }" />
         </div>
         <div class="gender-bar__labels">
-          <span>♂ {{ formatPercent(malePercent) }}%</span>
-          <span>♀ {{ formatPercent(femalePercent) }}%</span>
+          <span>
+            <img src="/pokedex/ic_male.svg" alt="" width="12" height="12" class="gender-bar__icon" />
+            {{ formatPercent(malePercent) }}%
+          </span>
+          <span>
+            <img src="/pokedex/ic_female.svg" alt="" width="9" height="13" class="gender-bar__icon" />
+            {{ formatPercent(femalePercent) }}%
+          </span>
         </div>
       </div>
 

@@ -5,6 +5,7 @@
   @include flex(flex-start, stretch, row);
   overflow: hidden;
   border-radius: $radius-lg;
+  height: 100%;
 
   &__info {
     @include flex(center, flex-start, column, $spacing-2);

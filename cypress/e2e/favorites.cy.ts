@@ -91,4 +91,27 @@ describe('Favorites store persistence', () => {
     cy.get('[data-testid="favorites-count"]').should('contain.text', '1')
     cy.get('[data-testid="pokedex-item"]').should('have.length', 1)
   })
+
+  it('shows the error state when the detail fetch fails, and recovers via retry', () => {
+    cy.window().then((win) => {
+      win.localStorage.setItem('pokeapi:favorites', JSON.stringify(['pikachu']))
+    })
+
+    cy.intercept('https://pokeapi.co/api/v2/pokemon/*', { statusCode: 500 }).as('pokemonDetailError')
+    cy.reload()
+    cy.visit('/favorites')
+    cy.waitForHydration()
+    cy.wait('@pokemonDetailError')
+
+    cy.get('[data-testid="favorites-error"]').should('be.visible')
+
+    cy.intercept('https://pokeapi.co/api/v2/pokemon/*', (req) => {
+      const name = req.url.split('/').filter(Boolean).pop() ?? ''
+      req.reply({ body: detailStubs[name] })
+    }).as('pokemonDetailRetry')
+    cy.get('[data-testid="favorites-retry"]').click()
+    cy.wait('@pokemonDetailRetry')
+
+    cy.get('[data-testid="pokedex-item"]').should('have.length', 1)
+  })
 })
