@@ -41,6 +41,12 @@ $color-filter-active: #0D47A1;
 $color-filter-border: #D6D6D6;
 $color-cancel-bg: #EEEEEE;
 
+$color-empty-title: #333333;
+$color-empty-text: #4D4D4D;
+
+$color-gender-male: #3B82F6;
+$color-gender-female: #F472B6;
+
 $type-normal: #8BC34A;
 $type-fire: #FF9800;
 $type-water: #2196F3;
@@ -85,6 +91,7 @@ $type-colors: (
 $font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,
   'Helvetica Neue', Arial, sans-serif;
 $font-family-headings: $font-family-base;
+$font-family-poppins: 'Poppins', $font-family-base;
 
 $font-size-xs: 12px;
 $font-size-sm: 14px;

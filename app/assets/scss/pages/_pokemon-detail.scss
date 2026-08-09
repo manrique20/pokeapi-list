@@ -1,0 +1,186 @@
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+
+.pokemon-detail {
+  &__hero {
+    position: relative;
+    height: 260px;
+    margin: (-$spacing-6) (-$spacing-6) 0;
+    overflow: hidden;
+
+    @include respond-to('md') {
+      height: 320px;
+      margin-top: -$spacing-8;
+    }
+  }
+
+  &__hero-circle {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 50%;
+    width: 140%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -55%);
+    border-radius: 50%;
+
+    // Desktop: drop the circle-crop effect, just a full-width flat panel.
+    @include respond-to('md') {
+      inset: 0;
+      width: auto;
+      aspect-ratio: auto;
+      transform: none;
+      border-radius: 0;
+    }
+  }
+
+  &__back,
+  &__favorite {
+    @include flex(center, center);
+    position: absolute;
+    z-index: 3;
+    top: $spacing-4;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    color: $color-white;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__back {
+    left: $spacing-2;
+  }
+
+  &__favorite {
+    right: $spacing-2;
+
+    &.is-active {
+      color: $color-favorite;
+    }
+  }
+
+  &__hero-icon {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    width: 280px;
+    height: 280px;
+    color: rgba($color-white, 0.25);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  &__sprite {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 50%;
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    transform: translateX(-50%);
+
+    @include respond-to('md') {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  &__name {
+    margin-top: $spacing-6;
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-extrabold;
+    color: $color-text;
+  }
+
+  &__number {
+    margin-top: $spacing-1;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text-muted;
+  }
+
+  &__description {
+    margin-top: $spacing-6;
+    padding-top: $spacing-6;
+    border-top: 1px solid $color-border;
+    color: $color-text-muted;
+    line-height: $line-height-base;
+  }
+
+  &__stats {
+    @include grid(2, $spacing-3);
+    margin-top: $spacing-6;
+  }
+
+  &__section-title {
+    margin: 0 0 $spacing-3;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+  }
+
+  &__gender,
+  &__weaknesses {
+    margin-top: $spacing-8;
+  }
+
+  &__gender .pokemon-detail__section-title {
+    text-align: center;
+  }
+}
+
+@each $name, $base in $type-colors {
+  .pokemon-detail__hero-circle--#{$name} {
+    background-color: $base;
+  }
+}
+
+.stat-card {
+  padding: $spacing-4;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  text-align: center;
+
+  &__label {
+    @include flex(flex-start, center, row, $spacing-1);
+    margin-bottom: $spacing-2;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-text-muted;
+    text-transform: uppercase;
+  }
+
+  &__value {
+    display: block;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+  }
+}
+
+.gender-bar {
+  @include flex(flex-start, stretch, row);
+  height: 8px;
+  overflow: hidden;
+  background-color: $color-border;
+  border-radius: $radius-full;
+
+  &__male {
+    background-color: $color-gender-male;
+  }
+
+  &__female {
+    background-color: $color-gender-female;
+  }
+
+  &__labels {
+    @include flex(space-between, center, row);
+    margin-top: $spacing-2;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text-muted;
+  }
+}

@@ -18,6 +18,21 @@
     padding: $spacing-8 $spacing-6;
   }
 
+  &__header {
+    @include flex(flex-start, center, row, $spacing-3);
+  }
+
+  &__back {
+    @include flex(center, center);
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    color: $color-text;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
   &__title {
     font-size: $font-size-xl;
     font-weight: $font-weight-extrabold;

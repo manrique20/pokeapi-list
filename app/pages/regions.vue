@@ -5,6 +5,11 @@ definePageMeta({ layout: 'main' })
 <template>
   <section class="page">
     <h1 class="page__title">{{ $t('pages.regions.title') }}</h1>
-    <p class="page__empty">{{ $t('pages.regions.empty') }}</p>
+    <EmptyState
+      icon="/empty/ic_comming_soon.svg"
+      :title="$t('pages.regions.emptyTitle')"
+      :text="$t('pages.regions.emptyText')"
+      data-testid="regions-empty"
+    />
   </section>
 </template>

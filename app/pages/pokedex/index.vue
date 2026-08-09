@@ -3,27 +3,6 @@ import type { PokemonEntry } from '~/utils/pokemon'
 
 definePageMeta({ layout: 'main' })
 
-const POKEMON_TYPES = [
-  'normal',
-  'fire',
-  'water',
-  'electric',
-  'grass',
-  'ice',
-  'fighting',
-  'poison',
-  'ground',
-  'flying',
-  'psychic',
-  'bug',
-  'rock',
-  'ghost',
-  'dragon',
-  'dark',
-  'steel',
-  'fairy',
-]
-
 const config = useRuntimeConfig()
 
 const {
@@ -42,42 +21,17 @@ const isLoadingPokemonList = computed(
 )
 const hasPokemonListError = computed(() => pokemonListStatus.value === 'error')
 
-interface PokemonDetail {
-  types: string[]
-}
-
-const pokemonDetails = ref(new Map<string, PokemonDetail>())
-const isLoadingDetails = ref(false)
-const hasDetailsError = ref(false)
-
-async function loadPokemonDetails(entries: PokemonEntry[]) {
-  isLoadingDetails.value = true
-  hasDetailsError.value = false
-  try {
-    const details = await Promise.all(
-      entries.map(async (entry) => ({
-        name: entry.name,
-        detail: await $fetch<{ types: { type: { name: string } }[] }>(
-          `${config.public.pokeApiBase}/pokemon/${entry.name}`
-        ),
-      }))
-    )
-    details.forEach(({ name, detail }) => {
-      pokemonDetails.value.set(name, {
-        types: detail.types.map((t) => t.type.name),
-      })
-    })
-  } catch {
-    hasDetailsError.value = true
-  } finally {
-    isLoadingDetails.value = false
-  }
-}
+const {
+  cache: pokemonDetails,
+  isLoading: isLoadingDetails,
+  hasError: hasDetailsError,
+  load: loadPokemonDetails,
+} = usePokemonDetails()
 
 watch(
   pokemonListData,
   (data) => {
-    if (data?.results?.length) loadPokemonDetails(data.results)
+    if (data?.results?.length) loadPokemonDetails(data.results.map((entry) => entry.name))
   },
   { immediate: true }
 )
@@ -96,7 +50,7 @@ async function retryPokedex() {
   if (hasPokemonListError.value) {
     await refreshPokemonList()
   } else if (pokemonListData.value?.results) {
-    await loadPokemonDetails(pokemonListData.value.results)
+    await loadPokemonDetails(pokemonListData.value.results.map((entry) => entry.name))
   }
 }
 
@@ -166,21 +120,23 @@ const filteredPokemon = computed(() => {
       <PokeballLoader />
     </div>
 
-    <div
+    <EmptyState
       v-else-if="hasPokedexError"
-      class="pokedex-status pokedex-status--error"
+      :title="$t('pages.pokedex.errorTitle')"
+      :text="$t('pages.pokedex.errorText')"
       data-testid="pokedex-error"
     >
-      <p>{{ $t('pages.pokedex.error') }}</p>
-      <button
-        type="button"
-        class="button button--primary"
-        data-testid="pokedex-retry"
-        @click="retryPokedex()"
-      >
-        {{ $t('pages.pokedex.retry') }}
-      </button>
-    </div>
+      <template #action>
+        <button
+          type="button"
+          class="button filter-actions__apply"
+          data-testid="pokedex-retry"
+          @click="retryPokedex()"
+        >
+          {{ $t('pages.pokedex.retry') }}
+        </button>
+      </template>
+    </EmptyState>
 
     <template v-else>
       <div class="pokedex-toolbar">
@@ -213,12 +169,9 @@ const filteredPokemon = computed(() => {
       </div>
 
       <ul class="pokedex-list" data-testid="pokedex-list">
-        <PokemonCard
-          v-for="entry in filteredPokemon"
-          :key="entry.name"
-          :entry="entry"
-          :types="entry.types"
-        />
+        <li v-for="entry in filteredPokemon" :key="entry.name">
+          <PokemonCard :entry="entry" :types="entry.types" />
+        </li>
       </ul>
 
       <p

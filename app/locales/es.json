@@ -4,7 +4,8 @@
   },
   "common": {
     "close": "Cerrar",
-    "loading": "Cargando"
+    "loading": "Cargando",
+    "back": "Volver"
   },
   "splash": {
     "loading": "Cargando..."
@@ -31,7 +32,8 @@
     "pokedex": {
       "title": "Pokédex",
       "noResults": "No se encontraron Pokémon",
-      "error": "No se pudo cargar la Pokédex. Inténtalo de nuevo.",
+      "errorTitle": "Algo salió mal...",
+      "errorText": "No pudimos cargar la información en este momento. Verifica tu conexión o intenta nuevamente más tarde.",
       "retry": "Reintentar",
       "number": "N°{id}",
       "favorite": "Marcar a {name} como favorito",
@@ -69,18 +71,29 @@
         }
       }
     },
+    "pokemonDetail": {
+      "weight": "Peso",
+      "height": "Altura",
+      "category": "Categoría",
+      "ability": "Habilidad",
+      "gender": "Género",
+      "weaknesses": "Debilidades"
+    },
     "regions": {
       "title": "Regiones",
-      "empty": "Próximamente: explora las regiones del mundo Pokémon."
+      "emptyTitle": "¡Muy pronto disponible!",
+      "emptyText": "Estamos trabajando para traerte esta sección. Vuelve más adelante para descubrir todas las novedades."
     },
     "favorites": {
       "title": "Favoritos",
       "count": "{count} Pokémon favoritos",
-      "empty": "Todavía no tienes favoritos. Toca el corazón en un Pokémon para guardarlo."
+      "emptyTitle": "No has marcado ningún Pokémon como favorito",
+      "emptyText": "Haz clic en el ícono de corazón de tus Pokémon favoritos y aparecerán aquí."
     },
     "profile": {
       "title": "Perfil",
-      "empty": "Próximamente: tu perfil y preferencias."
+      "emptyTitle": "¡Muy pronto disponible!",
+      "emptyText": "Estamos trabajando para traerte esta sección. Vuelve más adelante para descubrir todas las novedades."
     }
   }
 }

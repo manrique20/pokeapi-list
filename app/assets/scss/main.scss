@@ -6,8 +6,11 @@
 @use './components/_app-drawer.scss' as *;
 @use './components/_app-footer-nav.scss' as *;
 @use './components/_pokemon-card.scss' as *;
+@use './components/_empty-state.scss' as *;
+@use './components/_swipe-to-delete.scss' as *;
 
 // Pages
 @use './pages/_main.scss' as *;
 @use './pages/_onboarding.scss' as *;
 @use './pages/_pokedex.scss' as *;
+@use './pages/_pokemon-detail.scss' as *;

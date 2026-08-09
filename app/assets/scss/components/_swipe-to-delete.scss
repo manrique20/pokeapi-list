@@ -1,0 +1,43 @@
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+
+.swipe-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-lg;
+  background-color: $color-background;
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    touch-action: pan-y;
+    transition: transform $transition-base;
+
+    &.is-dragging {
+      transition: none;
+    }
+  }
+
+&__action {
+  @include flex(flex-end, center, row);
+  position: absolute;
+  z-index: 0;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+
+  background-color: $color-error;
+}
+
+  &__delete {
+    width: 80px;
+    height: 100%;
+    color: $color-white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    @include flex(center, center);
+  }
+}

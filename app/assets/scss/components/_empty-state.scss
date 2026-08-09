@@ -1,0 +1,33 @@
+@use '../_variables.scss' as *;
+@use '../_mixins.scss' as *;
+
+.empty-state {
+  @include flex(center, center, column, $spacing-4);
+  padding: $spacing-10 $spacing-6;
+  text-align: center;
+
+  &__icon {
+    width: 169px;
+    height: 209px;
+  }
+
+  &__title {
+    max-width: 280px;
+    font-family: $font-family-poppins;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+    color: $color-empty-title;
+  }
+
+  &__text {
+    max-width: 280px;
+    font-family: $font-family-poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: $color-empty-text;
+  }
+}

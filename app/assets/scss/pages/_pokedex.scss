@@ -8,10 +8,6 @@
   @include flex(center, center, column, $spacing-4);
   margin-top: $spacing-10;
   text-align: center;
-
-  &--error {
-    color: $color-error;
-  }
 }
 
 .pokedex-toolbar {
@@ -76,6 +72,7 @@
 }
 
 .pokedex-list {
+  @include flex(flex-start, stretch, column, $spacing-4);
   list-style: none;
   margin: $spacing-6 0 0;
   padding: 0;
@@ -204,4 +201,16 @@
 .collapse-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+.favorite-remove-leave-active,
+.favorite-remove-move {
+  transition:
+    opacity $transition-base,
+    transform $transition-base;
+}
+
+.favorite-remove-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
 }

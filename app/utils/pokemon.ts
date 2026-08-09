@@ -24,8 +24,26 @@ export function spriteUrl(entry: PokemonEntry): string {
   return `${SPRITES_BASE_URL}/${entryId(entry)}.png`
 }
 
+export function spriteUrlById(id: number): string {
+  return `${SPRITES_BASE_URL}/${id}.png`
+}
+
 export function capitalize(name: string): string {
   return name.charAt(0).toUpperCase() + name.slice(1)
+}
+
+// PokeAPI genus strings always follow a fixed per-locale pattern —
+// "Pokémon <X>" in Spanish, "<X> Pokémon" in English — so this holds
+// for any species, not just the ones we've tested.
+export function formatGenus(genus: string, locale: string): string {
+  return locale === 'es' ? genus.replace(/^Pokémon\s+/i, '') : genus.replace(/\s+Pokémon$/i, '')
+}
+
+// PokeAPI flavor text entries contain literal newline/form-feed
+// characters meant for the in-game textbox layout; collapse them
+// into spaces for a normal HTML paragraph.
+export function cleanFlavorText(text: string): string {
+  return text.replace(/[\n\f\r]+/g, ' ')
 }
 
 // Best-effort Material Symbols per Pokémon type — approximates the custom

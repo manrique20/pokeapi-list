@@ -12,7 +12,12 @@ const primaryType = computed(() => props.types[0] ?? 'normal')
 </script>
 
 <template>
-  <li class="pokemon-card" :class="`pokemon-card--${primaryType}`" data-testid="pokedex-item">
+  <NuxtLink
+    :to="`/pokedex/${entry.name}`"
+    class="pokemon-card"
+    :class="`pokemon-card--${primaryType}`"
+    data-testid="pokedex-item"
+  >
     <div class="pokemon-card__info">
       <span class="pokemon-card__number">
         {{ $t('pages.pokedex.number', { id: entryNumber(entry) }) }}
@@ -49,7 +54,7 @@ const primaryType = computed(() => props.types[0] ?? 'normal')
           })
         "
         data-testid="pokedex-favorite-toggle"
-        @click="favoritesStore.toggle(entry.name)"
+        @click.stop="favoritesStore.toggle(entry.name)"
       >
         <Icon
           :name="
@@ -70,5 +75,5 @@ const primaryType = computed(() => props.types[0] ?? 'normal')
         loading="lazy"
       />
     </div>
-  </li>
+  </NuxtLink>
 </template>

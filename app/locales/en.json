@@ -4,7 +4,8 @@
   },
   "common": {
     "close": "Close",
-    "loading": "Loading"
+    "loading": "Loading",
+    "back": "Back"
   },
   "splash": {
     "loading": "Loading..."
@@ -31,7 +32,8 @@
     "pokedex": {
       "title": "Pokédex",
       "noResults": "No Pokémon found",
-      "error": "We couldn't load the Pokédex. Please try again.",
+      "errorTitle": "Something went wrong...",
+      "errorText": "We couldn't load the information right now. Check your connection or try again later.",
       "retry": "Retry",
       "number": "#{id}",
       "favorite": "Mark {name} as favorite",
@@ -69,18 +71,29 @@
         }
       }
     },
+    "pokemonDetail": {
+      "weight": "Weight",
+      "height": "Height",
+      "category": "Category",
+      "ability": "Ability",
+      "gender": "Gender",
+      "weaknesses": "Weaknesses"
+    },
     "regions": {
       "title": "Regions",
-      "empty": "Coming soon: explore the regions of the Pokémon world."
+      "emptyTitle": "Coming very soon!",
+      "emptyText": "We're working on bringing you this section. Check back later to discover all the news."
     },
     "favorites": {
       "title": "Favorites",
       "count": "{count} favorite Pokémon",
-      "empty": "You don't have favorites yet. Tap the heart on a Pokémon to save it."
+      "emptyTitle": "You haven't marked any Pokémon as a favorite yet",
+      "emptyText": "Tap the heart icon on your favorite Pokémon and they'll show up here."
     },
     "profile": {
       "title": "Profile",
-      "empty": "Coming soon: your profile and preferences."
+      "emptyTitle": "Coming very soon!",
+      "emptyText": "We're working on bringing you this section. Check back later to discover all the news."
     }
   }
 }
