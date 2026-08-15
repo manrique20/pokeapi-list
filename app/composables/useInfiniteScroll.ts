@@ -1,9 +1,4 @@
-// ============================================================
-// USE INFINITE SCROLL
-// Thin wrapper over the native IntersectionObserver: watches a
-// sentinel element and fires a callback once it enters the
-// viewport. Client-only, no external dependency.
-// ============================================================
+
 
 export function useInfiniteScroll(
   target: Ref<HTMLElement | null>,

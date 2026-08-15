@@ -1,6 +1,7 @@
 # pokeapi-list
 
 Pokédex app — technical test (Front End Developer). Built with **Nuxt 4** (Vue 3 + TypeScript).
+Created by Juan Sebastian Manrique Garcia
 
 ## Tech stack & decisions
 

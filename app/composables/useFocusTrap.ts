@@ -1,10 +1,4 @@
-// ============================================================
-// USE FOCUS TRAP
-// Traps Tab/Shift+Tab cycling inside a container while active,
-// moves focus into it on activation, and restores focus to the
-// previously-focused element on deactivation. Used by modal-like
-// components (AppDrawer) to keep keyboard focus inside a dialog.
-// ============================================================
+
 
 import type { Ref } from 'vue'
 

@@ -1,8 +1,3 @@
-// ============================================================
-// USE FIRST TIME
-// Tracks whether the user has completed onboarding.
-// Persisted in localStorage so returning users skip it.
-// ============================================================
 
 export function useFirstTime() {
   const flag = ref<boolean | null>(null)

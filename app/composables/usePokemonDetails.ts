@@ -1,10 +1,4 @@
-// ============================================================
-// USE POKEMON DETAILS
-// Fetches per-Pokémon detail (id + types) in parallel for a list
-// of names, caching results in memory so repeat calls (search,
-// re-renders, revisits) never refetch. Shared by pokedex.vue and
-// favorites.vue, which both need types to render PokemonCard.
-// ============================================================
+
 
 export interface PokemonDetail {
   id: number
